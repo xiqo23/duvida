@@ -1,0 +1,109 @@
+GerenciadorTelas:
+    Tela1:
+        name: 'Tela 1'
+
+    Tela2:
+        name: 'Tela 2'
+
+<Tela1>
+    BoxLayout:
+        id:layout
+        padding: 10
+        spacing: 5
+        MDRaisedButton:
+            text: 'Ir para o mapa'
+            on_release: app.root.current = 'Tela 2'
+<Tela2>
+    BoxLayout:
+        orientation: 'vertical'
+        BoxLayout:
+            id:layout
+            padding: 10
+            spacing: 5
+            MapView:
+                id: mapa_principal
+                border_margin: 10
+                zoom: 7
+                lat:-22.9423
+                lon:-42.03376
+                double_tap_zoom: True
+                MapMarkerPopup:
+                    id: marcador
+                    lat: 0
+                    lon: 0
+                    Button
+                        on_release:
+                            print ("Deu certo")
+            ScrollView:
+                halign: "center"
+                do_scroll_x: False
+                do_scroll_y: False
+
+                ScatterLayout:
+                    id: scarter_img
+                    size: img.size
+                    Image:
+                        id: img
+                        size: (500, 500/self.image_ratio)
+                        source: "IMG_INTERFACE/GEOCART_INICIAL.jpg"
+                        allow_stretch: True
+                        keep_ratio: True
+
+        MDLabel:
+            id: descricao
+            halign: 'center'
+            valign:'middle'
+            size_hint_y: 0.12
+        BoxLayout:
+            size_hint_y: 0.20
+            BoxLayout:
+                orientation: 'vertical'
+                BoxLayout:
+                    CheckBox:
+                        id: check1
+                        size_hint_x: 0.1
+                        on_press: root.checkbox1()
+                    Spinner:
+                        id: em
+                        disabled: True
+                        text: "Escolha o mapa"
+                        #values: ["MAPA_01", "MAPA_02"]
+                        on_text: root.liberarVT()
+                    Spinner:
+                        id: vt
+                        disabled: True
+                        text: "Verifique os toponimos do mapa"
+                        disabled: True
+                        values: ["Cabo Frio"]
+                        on_text:root.liberarplotar()
+                BoxLayout:
+                    CheckBox:
+                        id: check2
+                        size_hint_x: 0.1
+                        on_press: root.checkbox2()
+                    Spinner:
+                        id: et
+                        text: "Escolha o toponimo"
+                        disabled: True
+                        values: []
+                        on_text: root.liberarVM()
+                    Spinner:
+                        id: vm
+                        text: "Verifique os mapas que ele aparece"
+                        disabled: True
+                        values: ["MAPA_01", "MAPA_02"]
+                        on_text:root.liberarplotar()
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_x: 0.2
+                Button:
+                    id: plotar
+                    disabled: True
+                    text: 'Plotar'
+                    on_press: root.plotarmap(), root.plotarimagem()
+                    on_release: root.descricaoresultado()
+                Button:
+                    id: reset
+                    disabled: True
+                    text: 'Reset'
+                    on_press: root.resetar()
